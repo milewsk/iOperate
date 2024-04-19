@@ -1,5 +1,5 @@
 // @ts-check
-/** @type {number} */
+/** @type {unknown} */
 
 import { useRouteError } from "react-router-dom";
 
