@@ -1,3 +1,5 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { isRouteErrorResponse, useRouteError } from "react-router-dom";
 
@@ -17,7 +19,7 @@ const ErrorPage = (): JSX.Element => {
   return (
     <div id="error-page" className="">
       <div>
-        <img src="" alt="" />
+        <FontAwesomeIcon icon={faTriangleExclamation} />
       </div>
       <div>
         <h1>Oops!</h1>
