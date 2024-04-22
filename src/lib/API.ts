@@ -1,11 +1,33 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { CreateAxiosDefaults } from "axios";
 import { AxiosResponse } from "axios";
 
-// Axios instance
+// API properties
+const baseURL: string = import.meta.env.VITE_iOperateAPI_URL;
+const secretKey: string = import.meta.env.VITE_iOperateAPI_SecretKey;
 
+// API Interface
+type ApiFunctionType = <T>(
+  URL: string,
+  data?: undefined
+) => Promise<AxiosResponse<T, any>>;
+
+interface API {
+  get: ApiFunctionType;
+  post: ApiFunctionType;
+  put: ApiFunctionType;
+  delete: ApiFunctionType;
+}
+
+// Axios instance
 const axiosConfig: CreateAxiosDefaults = {
-  baseURL: "",
+  baseURL: baseURL,
   withCredentials: true,
+  headers: {
+    "Access-Control-Allow-Origin": "*",
+    "Content-Type": "application/json",
+    SecretKey: secretKey,
+  },
 };
 
 const client = axios.create(axiosConfig);
@@ -13,11 +35,6 @@ const client = axios.create(axiosConfig);
 client.interceptors.request.use(
   function (config) {
     // Do something before request is sent
-    config.headers = {
-      "Access-Control-Allow-Origin": "*",
-      "Content-Type": "application/json",
-    };
-
     return config;
   },
   function (error) {
@@ -37,7 +54,7 @@ client.interceptors.response.use(
   }
 );
 
-const API = {
+const API: API = {
   get: async function <T>(URL: string, data?: undefined) {
     return await client.get<T, AxiosResponse<T>>(URL, data);
   },
